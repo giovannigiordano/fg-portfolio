@@ -1,7 +1,6 @@
 import Head from "next/head";
-import React from "react";
+import React, {PropsWithChildren} from "react";
 import styles from "../../public/styles/content.module.css";
-import Author from "../components/Author";
 import Copyright from "../components/Copyright";
 import Date from "../components/Date";
 import Layout from "../components/Layout";
@@ -11,86 +10,72 @@ import OpenGraphMeta from "../components/meta/OpenGraphMeta";
 import TwitterCardMeta from "../components/meta/TwitterCardMeta";
 import {SocialList} from "../components/SocialList";
 import TagButton from "../components/TagButton";
-import {getAuthor} from "../lib/authors";
-import {getTag} from "../lib/tags";
 
 type Props = {
-  title: string;
-  date: Date;
-  slug: string;
-  description: string;
-  tags: string[];
-  author: string;
+  frontMatter: {
+    title: string;
+    date: Date;
+    slug: string;
+    description: string;
+    tags: string[];
+  }
 };
-export default function Index({
-  title,
-  date,
-  slug,
-  author,
-  tags,
-  description,
-}: Props) {
-  const keywords = tags.map((it) => getTag(it).name);
-  const authorName = getAuthor(author).name;
-  return ({children: content}) => {
-    return (
-      <Layout>
-        <BasicMeta
-          url={`/posts/${slug}`}
-          title={title}
-          keywords={keywords}
-          description={description}
-        />
-        <TwitterCardMeta
-          url={`/posts/${slug}`}
-          title={title}
-          description={description}
-        />
-        <OpenGraphMeta
-          url={`/posts/${slug}`}
-          title={title}
-          description={description}
-        />
-        <JsonLdMeta
-          url={`/posts/${slug}`}
-          title={title}
-          keywords={keywords}
-          date={date}
-          author={authorName}
-          description={description}
-        />
-        <div className={"container"}>
-          <article>
-            <header>
-              SONO UN WORK DEMO
-              <h1 style={{color: "red"}}>{title}</h1>
-              <div className={"metadata"}>
-                <div>
-                  <Date date={date} />
-                </div>
-                <div>
-                  <Author author={getAuthor(author)} />
-                </div>
+
+const WorkPage: React.FC<Props> = (props) => {
+  const {
+    title,
+    date,
+    slug,
+    tags,
+    description
+  } = props.frontMatter
+
+  return (
+    <Layout>
+      <BasicMeta
+        url={`/works/${slug}`}
+        title={title}
+        description={description}
+      />
+      <TwitterCardMeta
+        url={`/works/${slug}`}
+        title={title}
+        description={description}
+      />
+      <OpenGraphMeta
+        url={`/works/${slug}`}
+        title={title}
+        description={description}
+      />
+      <JsonLdMeta
+        url={`/works/${slug}`}
+        title={title}
+        date={date}
+        description={description}
+      />
+      <div className={"container"}>
+        <article>
+          <header>
+            SONO UN DEMO WORK
+            <h1>{title}</h1>
+
+            <div className={"metadata"}>
+              <div>
+                <Date date={date} />
               </div>
-            </header>
-            <div className={styles.content}>{content}</div>
-            <ul className={"tag-list"}>
-              {tags.map((it, i) => (
-                <li key={i}>
-                  <TagButton tag={getTag(it)} />
-                </li>
-              ))}
-            </ul>
-          </article>
-          <footer>
-            <div className={"social-list"}>
-              <SocialList />
             </div>
-            <Copyright />
-          </footer>
-        </div>
-        <style jsx>
-          {`
+          </header>
+          <div className={styles.content}>{props.children}</div>
+        </article>
+        <footer>
+          <div className={"social-list"}>
+            <SocialList />
+          </div>
+          <Copyright />
+        </footer>
+      </div>
+      <style jsx>
+        {`
             .container {
               display: block;
               max-width: 36rem;
@@ -132,9 +117,9 @@ export default function Index({
               }
             }
           `}
-        </style>
-        <style global jsx>
-          {`
+      </style>
+      <style global jsx>
+        {`
             /* Syntax highlighting */
             .token.comment,
             .token.prolog,
@@ -232,8 +217,9 @@ export default function Index({
               color: #005cc5;
             }
           `}
-        </style>
-      </Layout>
-    );
-  };
+      </style>
+    </Layout>
+  );
 }
+
+export default WorkPage
