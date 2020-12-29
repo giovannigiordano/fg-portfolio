@@ -3,27 +3,28 @@ import matter from "gray-matter";
 import path from "path";
 import yaml from "js-yaml";
 
-const postsDirectory = path.join(process.cwd(), "src/pages/posts");
+const workssDirectory = path.join(process.cwd(), "src/pages/works");
 
-export type PostContent = {
+export type WorkContent = {
   readonly date: string;
-  readonly title: string;
   readonly slug: string;
+  readonly thumbnail: string;
+  readonly title: string;
 };
 
-let postCache: PostContent[];
+let workCache: WorkContent[];
 
-function fetchPostContent(): PostContent[] {
-  if (postCache) {
-    return postCache;
+function fetchPostContent(): WorkContent[] {
+  if (workCache) {
+    return workCache;
   }
   // Get file names under /posts
-  const fileNames = fs.readdirSync(postsDirectory);
-  const allPostsData = fileNames
+  const fileNames = fs.readdirSync(workssDirectory);
+  const allWorksData = fileNames
     .filter((it) => it.endsWith(".mdx"))
     .map((fileName) => {
       // Read markdown file as string
-      const fullPath = path.join(postsDirectory, fileName);
+      const fullPath = path.join(workssDirectory, fileName);
       const fileContents = fs.readFileSync(fullPath, "utf8");
 
       // Use gray-matter to parse the post metadata section
@@ -34,8 +35,9 @@ function fetchPostContent(): PostContent[] {
       });
       const matterData = matterResult.data as {
         date: string;
-        title: string;
         slug: string;
+        thumbnail: string;
+        title: string;
       };
       const slug = fileName.replace(/\.mdx$/, "");
 
@@ -49,22 +51,22 @@ function fetchPostContent(): PostContent[] {
       return matterData;
     });
   // Sort posts by date
-  postCache = allPostsData.sort((a, b) => {
+  workCache = allWorksData.sort((a, b) => {
     if (a.date < b.date) {
       return 1;
     } else {
       return -1;
     }
   });
-  return postCache;
+  return workCache;
 }
 
-export function countPosts(): number {
+export function countWorks(): number {
   return fetchPostContent().length;
 }
 
-export function listPostContent(
+export function listWorkContent(
   page: number,
-): PostContent[] {
+): WorkContent[] {
   return fetchPostContent()
 }

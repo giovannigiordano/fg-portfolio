@@ -1,16 +1,11 @@
 import React from "react";
 import {PostContent} from "../lib/posts";
 import PostItem from "./PostItem";
-import Pagination from "./Pagination";
 
 type Props = {
   posts: PostContent[];
-  pagination: {
-    current: number;
-    pages: number;
-  };
 };
-export default function PostList({posts, pagination}: Props) {
+export default function PostList({posts}: Props) {
   return (
     <div className={"container"}>
       <div className={"posts"}>
@@ -21,14 +16,6 @@ export default function PostList({posts, pagination}: Props) {
             </li>
           ))}
         </ul>
-        <Pagination
-          current={pagination.current}
-          pages={pagination.pages}
-          link={{
-            href: (page) => (page === 1 ? "/posts" : "/posts/page/[page]"),
-            as: (page) => (page === 1 ? null : "/posts/page/" + page),
-          }}
-        />
       </div>
       <style jsx>{`
         .container {
