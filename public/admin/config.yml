@@ -68,8 +68,8 @@ collections:
         format: "YYYY-MM-DD"
         dateFormat: "YYYY-MM-DD"
         timeFormat: false
-      - label: "Featured Image",
-        name: "thumbnail",
+      - label: "Featured Image"
+        name: "thumbnail"
         widget: "image"
       - label: "Body"
         name: "body"
