@@ -13,6 +13,7 @@ import TagButton from "../components/TagButton";
 
 type Props = {
   frontMatter: {
+    thumbnail: string;
     title: string;
     date: Date;
     slug: string;
@@ -27,7 +28,8 @@ const WorkPage: React.FC<Props> = (props) => {
     date,
     slug,
     tags,
-    description
+    description,
+    thumbnail
   } = props.frontMatter
 
   return (
@@ -58,6 +60,8 @@ const WorkPage: React.FC<Props> = (props) => {
           <header>
             SONO UN DEMO WORK
             <h1>{title}</h1>
+
+            <img src={thumbnail} />
 
             <div className={"metadata"}>
               <div>
