@@ -9,7 +9,6 @@ import JsonLdMeta from "../components/meta/JsonLdMeta";
 import OpenGraphMeta from "../components/meta/OpenGraphMeta";
 import TwitterCardMeta from "../components/meta/TwitterCardMeta";
 import {SocialList} from "../components/SocialList";
-import TagButton from "../components/TagButton";
 
 type Props = {
   frontMatter: {

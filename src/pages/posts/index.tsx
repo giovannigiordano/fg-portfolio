@@ -11,7 +11,8 @@ import Head from "next/head";
 type Props = {
   posts: PostContent[];
 };
-export default function Index({posts, pagination}: Props) {
+
+const Posts: React.FC<Props> = (props) => {
   const url = "/posts";
   const title = "All posts";
   return (
@@ -19,7 +20,7 @@ export default function Index({posts, pagination}: Props) {
       <BasicMeta url={url} title={title} />
       <OpenGraphMeta url={url} title={title} />
       <TwitterCardMeta url={url} title={title} />
-      <PostList posts={posts} />
+      <PostList posts={props.posts} />
     </Layout>
   );
 }
@@ -32,3 +33,5 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   };
 };
+
+export default Posts
