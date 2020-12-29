@@ -21,7 +21,14 @@ const Works: React.FC<Props> = (props) => {
       <BasicMeta url={url} title={title} />
       <OpenGraphMeta url={url} title={title} />
       <TwitterCardMeta url={url} title={title} />
-      <PostList posts={props.works} />
+      <ul>
+        {props.works.map(work => (
+          <li>
+            <span>{work.title}</span>
+            <img src={work.thumbnail} />
+          </li>
+        ))}
+      </ul>
     </Layout>
   );
 }

@@ -3,7 +3,7 @@ import matter from "gray-matter";
 import path from "path";
 import yaml from "js-yaml";
 
-const workssDirectory = path.join(process.cwd(), "src/pages/works");
+const worksDirectory = path.join(process.cwd(), "src/pages/works");
 
 export type WorkContent = {
   readonly date: string;
@@ -19,12 +19,12 @@ function fetchPostContent(): WorkContent[] {
     return workCache;
   }
   // Get file names under /posts
-  const fileNames = fs.readdirSync(workssDirectory);
+  const fileNames = fs.readdirSync(worksDirectory);
   const allWorksData = fileNames
     .filter((it) => it.endsWith(".mdx"))
     .map((fileName) => {
       // Read markdown file as string
-      const fullPath = path.join(workssDirectory, fileName);
+      const fullPath = path.join(worksDirectory, fileName);
       const fileContents = fs.readFileSync(fullPath, "utf8");
 
       // Use gray-matter to parse the post metadata section
