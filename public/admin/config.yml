@@ -44,7 +44,7 @@ collections:
 
   - name: "works"
     label: "Works"
-    folder: "content/works"
+    folder: "src/pages/works"
     extension: "mdx"
     format: "frontmatter"
     create: true
@@ -93,3 +93,17 @@ collections:
       - label: "Body"
         name: "body"
         widget: "markdown"
+        
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post-page"
+  -
+    scope:
+      path: ""
+      type: "works"
+    values:
+      layout: "work-page"

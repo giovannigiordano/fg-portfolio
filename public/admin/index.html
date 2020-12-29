@@ -28,6 +28,21 @@
         },
       });
       CMS.registerPreviewTemplate("posts", PostPreview);
+
+      var WorkPreview = createClass({
+        render: function () {
+          var entry = this.props.entry;
+          var date = entry.getIn(["data", "date"]);
+          return h(
+            "div",
+            { className: "content" },
+            h("h1", {}, entry.getIn(["data", "title"])),
+            h("time", {}, entry.getIn(["data", "date"])),
+            h("div", {}, this.props.widgetFor("body"))
+          );
+        },
+      });
+      CMS.registerPreviewTemplate("works", WorkPreview);
     </script>
   </body>
 </html>

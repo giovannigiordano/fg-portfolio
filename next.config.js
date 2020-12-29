@@ -3,7 +3,6 @@ const rehypePrism = require("@mapbox/rehype-prism");
 
 module.exports = withMdxEnhanced({
   layoutPath: "src/layouts",
-  defaultLayout: true,
   rehypePlugins: [rehypePrism],
 })({
   pageExtensions: ["mdx", "tsx"],

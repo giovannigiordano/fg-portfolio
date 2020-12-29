@@ -9,10 +9,10 @@ import BasicMeta from "../components/meta/BasicMeta";
 import JsonLdMeta from "../components/meta/JsonLdMeta";
 import OpenGraphMeta from "../components/meta/OpenGraphMeta";
 import TwitterCardMeta from "../components/meta/TwitterCardMeta";
-import { SocialList } from "../components/SocialList";
+import {SocialList} from "../components/SocialList";
 import TagButton from "../components/TagButton";
-import { getAuthor } from "../lib/authors";
-import { getTag } from "../lib/tags";
+import {getAuthor} from "../lib/authors";
+import {getTag} from "../lib/tags";
 
 type Props = {
   title: string;
@@ -32,7 +32,7 @@ export default function Index({
 }: Props) {
   const keywords = tags.map((it) => getTag(it).name);
   const authorName = getAuthor(author).name;
-  return ({ children: content }) => {
+  return ({children: content}) => {
     return (
       <Layout>
         <BasicMeta
@@ -62,6 +62,7 @@ export default function Index({
         <div className={"container"}>
           <article>
             <header>
+              SONO UN DEMO
               <h1>{title}</h1>
               <div className={"metadata"}>
                 <div>
