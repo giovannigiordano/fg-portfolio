@@ -58,10 +58,10 @@ const WorkPage: React.FC<Props> = (props) => {
       <div className={"container"}>
         <article>
           <header>
-            SONO UN DEMO WORK
+            WORK LAYOUT
             <h1>{title}</h1>
 
-            <img src={thumbnail} />
+            <img alt="default-image" src={thumbnail} />
 
             <div className={"metadata"}>
               <div>
