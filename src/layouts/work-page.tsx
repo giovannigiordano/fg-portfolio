@@ -12,12 +12,12 @@ import {SocialList} from "../components/SocialList";
 
 type Props = {
   frontMatter: {
-    thumbnail: string;
-    title: string;
+    description: string;
     date: Date;
     slug: string;
-    description: string;
-    tags: string[];
+    thumbnail: string;
+    thumbnail_kind: "big" | "small";
+    title: string;
   }
 };
 
@@ -26,10 +26,11 @@ const WorkPage: React.FC<Props> = (props) => {
     title,
     date,
     slug,
-    tags,
     description,
-    thumbnail
+    thumbnail,
+    thumbnail_kind
   } = props.frontMatter
+  console.log(props.frontMatter)
 
   return (
     <Layout>
@@ -57,8 +58,7 @@ const WorkPage: React.FC<Props> = (props) => {
       <div className={"container"}>
         <article>
           <header>
-            WORK LAYOUT
-            <h1>{title}</h1>
+            <h1 style={{color: thumbnail_kind === "big" ? 'red' : 'blue'}}>{title}</h1>
 
             <img alt="default-image" src={thumbnail} />
 

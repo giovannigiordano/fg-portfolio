@@ -71,6 +71,10 @@ collections:
       - label: "Featured Image"
         name: "thumbnail"
         widget: "image"
+      - label: "Featured Image Kind"
+        name: "thumbnail_kind"
+        widget: "select"
+        options: ["big", "small"]
       - label: "Body"
         name: "body"
         widget: "markdown"

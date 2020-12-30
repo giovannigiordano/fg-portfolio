@@ -9,6 +9,7 @@ export type WorkContent = {
   readonly date: string;
   readonly slug: string;
   readonly thumbnail: string;
+  readonly thumbnail_kind: "big" | "small";
   readonly title: string;
 };
 
@@ -33,12 +34,7 @@ function fetchPostContent(): WorkContent[] {
           yaml: (s) => yaml.safeLoad(s, {schema: yaml.JSON_SCHEMA}) as object,
         },
       });
-      const matterData = matterResult.data as {
-        date: string;
-        slug: string;
-        thumbnail: string;
-        title: string;
-      };
+      const matterData = matterResult.data as WorkContent;
       const slug = fileName.replace(/\.mdx$/, "");
 
       // Validate slug string

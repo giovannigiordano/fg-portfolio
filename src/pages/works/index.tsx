@@ -15,20 +15,38 @@ type Props = {
 const Works: React.FC<Props> = (props) => {
   const url = "/works";
   const title = "All works";
+  const columnsNumber = 4
+  const itemsPerColumn = Math.floor(props.works.length / columnsNumber)
+  const bigThumbnailWorks = props.works.filter(work => work.thumbnail_kind === "big")
+  const smallThumbnailWorks = props.works.filter(work => work.thumbnail_kind === "small")
+  const sortedWorks = props.works.sort((a, b) => {
+    if (a.thumbnail_kind === "big" && b.thumbnail_kind === "big") {
+      return 1
+    }
+    if (a.thumbnail_kind === "small" && b.thumbnail_kind === "small") {
+      return 1
+    }
+
+    return 0
+  })
+
 
   return (
     <Layout>
       <BasicMeta url={url} title={title} />
       <OpenGraphMeta url={url} title={title} />
       <TwitterCardMeta url={url} title={title} />
-      <ul>
-        {props.works.map(work => (
-          <li>
-            <span>{work.title}</span>
-            <img src={work.thumbnail} />
-          </li>
+      <div style={{display: 'flex'}}>
+        {Array(4).fill(null).map((_, columnIndex) => (
+          <div style={{width: '25%'}}>
+            {sortedWorks.slice(columnIndex * itemsPerColumn, columnIndex * itemsPerColumn + itemsPerColumn).map(work => (
+              <li key={work.title} style={{color: work.thumbnail_kind === "big" ? "red" : "blue"}}>
+                <img src={work.thumbnail} />
+              </li>
+            ))}
+          </div>
         ))}
-      </ul>
+      </div>
     </Layout>
   );
 }
