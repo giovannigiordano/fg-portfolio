@@ -19,21 +19,16 @@ import {
   nth,
   head,
   tail,
+  indexOf,
+  addIndex,
+  reverse,
+  values,
+  compose,
+  curry,
 } from 'ramda'
 import { WorkContent } from './works'
 
-const sortWorks = comparator((a: WorkContent, b: WorkContent): boolean => {
-  if (a.thumbnail_kind === 'big' && b.thumbnail_kind === 'big') {
-    return false
-  }
-  if (a.thumbnail_kind === 'small' && b.thumbnail_kind === 'small') {
-    return false
-  }
-
-  return true
-})
-
-export function chunks(items: any[], chunksCount: number) {
+export const chunks = curry((chunksCount: number, items: any[]) => {
   const targetChunkSize = Math.floor(items.length / chunksCount)
   const restingItems = items.length % chunksCount
 
@@ -63,17 +58,36 @@ export function chunks(items: any[], chunksCount: number) {
   }
 
   return makeChunks([], items, 0, restingItems)
-}
+})
 
-function makeMasonry(items: WorkContent[]): WorkContent[][] {
-  const groupedWorks = groupBy<WorkContent>(path(['thumbnail_kind']), items)
-  const bigThumbnailsWorks = groupedWorks.big
-  const smallThumbnailWorks = groupedWorks.small
-  const sortedWorks = flatten(
-    transpose([bigThumbnailsWorks, smallThumbnailWorks])
-  )
+const isOdd = (value: number): boolean => value % 2 === 0
+const sortWorks = comparator((a: WorkContent, b: WorkContent): boolean => {
+  if (a.thumbnail_kind === 'big' && b.thumbnail_kind === 'big') {
+    return false
+  }
+  if (a.thumbnail_kind === 'small' && b.thumbnail_kind === 'small') {
+    return false
+  }
 
-  return transpose([bigThumbnailsWorks, smallThumbnailWorks])
-}
+  return true
+})
+const groupByThumbnailKind = groupBy<WorkContent>(path(['thumbnail_kind']))
+const indexedMap = addIndex<WorkContent[]>(map)
+const reverseOdd = indexedMap((item, index) =>
+  isOdd(index + 1) ? reverse(item) : item
+)
 
-export default makeMasonry
+const makeMasonry = compose(
+  transpose as (list: WorkContent[][]) => WorkContent[][],
+  values,
+  groupByThumbnailKind
+)
+
+export const makeHorizontalMasonry = compose(reverseOdd, makeMasonry)
+
+export const makeVerticalMasonry = compose(
+  reverseOdd,
+  chunks(2), // columns
+  flatten,
+  makeMasonry
+)

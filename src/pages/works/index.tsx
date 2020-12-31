@@ -7,6 +7,9 @@ import config from '../../lib/config'
 import { countWorks, listWorkContent, WorkContent } from '../../lib/works'
 import Head from 'next/head'
 import WorkList from '../../components/Work/List'
+import { useLayoutEffect, useState } from 'react'
+import { useDevice } from '../../contexts/device'
+import makeDeviceClassName from '../../lib/makeDeviceClassName'
 
 type Props = {
   works: WorkContent[]
@@ -15,6 +18,7 @@ type Props = {
 const Works: React.FC<Props> = (props) => {
   const url = '/works'
   const title = 'All works'
+  const device = useDevice()
 
   return (
     <Layout>
@@ -22,11 +26,23 @@ const Works: React.FC<Props> = (props) => {
       <OpenGraphMeta url={url} title={title} />
       <TwitterCardMeta url={url} title={title} />
 
-      <div className="flex items-center">
+      <div
+        className={makeDeviceClassName(
+          'flex items-center',
+          'flex-col',
+          'flex-row',
+          device.value
+        )}
+      >
         <div>
           <h1
-            className="flex flex-col ml-20 mr-32 text-6xl text-gray-600 uppercase"
-            style={{ width: 450 }}
+            className={makeDeviceClassName(
+              'flex flex-col text-gray-600 uppercase',
+              'text-3xl mt-5 mb-10',
+              'text-6xl mr-32 ml-20 ',
+              device.value
+            )}
+            style={{ width: device.value === 'desktop' ? 450 : 250 }}
           >
             <span className="font-semibold ">Francesco</span>
             <span className="self-end font-semibold ">Giordano</span>
