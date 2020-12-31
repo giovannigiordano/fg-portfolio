@@ -7,6 +7,7 @@ import PostList from "../../components/PostList";
 import config from "../../lib/config";
 import {countWorks, listWorkContent, WorkContent} from "../../lib/works";
 import Head from "next/head";
+import makeMasonry from "../../lib/masonry";
 
 type Props = {
   works: WorkContent[];
@@ -15,35 +16,21 @@ type Props = {
 const Works: React.FC<Props> = (props) => {
   const url = "/works";
   const title = "All works";
-  const columnsNumber = 4
-  const itemsPerColumn = Math.floor(props.works.length / columnsNumber)
-  const bigThumbnailWorks = props.works.filter(work => work.thumbnail_kind === "big")
-  const smallThumbnailWorks = props.works.filter(work => work.thumbnail_kind === "small")
-  const sortedWorks = props.works.sort((a, b) => {
-    if (a.thumbnail_kind === "big" && b.thumbnail_kind === "big") {
-      return 1
-    }
-    if (a.thumbnail_kind === "small" && b.thumbnail_kind === "small") {
-      return 1
-    }
+  const columns = makeMasonry(3, props.works)
 
-    return 0
-  })
-
-
+  console.log(columns.map(column => column.map(work => work.thumbnail_kind)))
   return (
     <Layout>
       <BasicMeta url={url} title={title} />
       <OpenGraphMeta url={url} title={title} />
       <TwitterCardMeta url={url} title={title} />
       <div style={{display: 'flex'}}>
-        {Array(4).fill(null).map((_, columnIndex) => (
-          <div style={{width: '25%'}}>
-            {sortedWorks.slice(columnIndex * itemsPerColumn, columnIndex * itemsPerColumn + itemsPerColumn).map(work => (
+        {columns.map(column => (
+          <div style={{width: '33.333%'}}>
+            {column.map((work) => (
               <li key={work.title} style={{color: work.thumbnail_kind === "big" ? "red" : "blue"}}>
                 <img src={work.thumbnail} />
-              </li>
-            ))}
+              </li>))}
           </div>
         ))}
       </div>
