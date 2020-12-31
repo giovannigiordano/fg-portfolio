@@ -23,7 +23,7 @@ export default function Layout({ children }: Props) {
         className={makeDeviceClassName(
           'flex',
           'justify-center',
-          'flex items-center overflow-y-hidden h-screen',
+          'justify-center',
           device.value
         )}
       >

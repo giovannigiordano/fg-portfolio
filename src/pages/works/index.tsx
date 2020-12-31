@@ -30,23 +30,23 @@ const Works: React.FC<Props> = (props) => {
         className={makeDeviceClassName(
           'flex items-center',
           'flex-col',
-          'flex-row',
+          'flex-row pl-32 pt-10',
           device.value
         )}
       >
         <div>
           <h1
             className={makeDeviceClassName(
-              'flex flex-col text-gray-600 uppercase',
+              'flex flex-col uppercase fixed left-4 top-4 z-10',
               'text-3xl mt-5 mb-10',
-              'text-6xl mr-32 ml-20 ',
+              'text-6xl',
               device.value
             )}
             style={{ width: device.value === 'desktop' ? 450 : 250 }}
           >
-            <span className="font-semibold ">Francesco</span>
-            <span className="self-end font-semibold ">Giordano</span>
-            <span className="font-light">Architect</span>
+            <span className="font-bold ">Francesco</span>
+            <span className="self-end font-bold ">Giordano</span>
+            <span className="font-bold">Architect</span>
           </h1>
         </div>
 

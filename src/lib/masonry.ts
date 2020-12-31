@@ -87,7 +87,7 @@ export const makeHorizontalMasonry = compose(reverseOdd, makeMasonry)
 
 export const makeVerticalMasonry = compose(
   reverseOdd,
-  chunks(2), // columns
+  chunks(3), // columns
   flatten,
   makeMasonry
 )

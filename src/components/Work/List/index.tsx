@@ -3,7 +3,7 @@ import {
   makeHorizontalMasonry,
   makeVerticalMasonry,
 } from '../../../lib/masonry'
-import Item from './Items'
+import Item from './Item'
 import { useDevice } from '../../../contexts/device'
 import makeDeviceClassName from '../../../lib/makeDeviceClassName'
 
@@ -15,25 +15,21 @@ const columnWidth = 300
 
 const List: React.FC<Props> = (props) => {
   const device = useDevice()
-  const columns =
-    device.value === 'desktop'
-      ? makeHorizontalMasonry(props.items)
-      : makeVerticalMasonry(props.items)
+  const columns = makeVerticalMasonry(props.items)
 
   return (
-    <div
-      className="flex justify-center max-h-full space-x-2"
-      style={device.value === 'desktop' ? { width: 300 * 5 } : undefined}
-    >
+    <div className="flex justify-center max-h-full space-x-2">
       {columns.map((column, index) => {
         const isOdd = (index + 1) % 2 === 0
         return (
           <div
             key={index}
             className={makeDeviceClassName(
-              ['space-y-2', isOdd && 'mt-10'].join(' '),
+              ['space-y-2', index === 0 ? 'mt-48' : '', isOdd && 'mt-10'].join(
+                ' '
+              ),
               'flex-1 w-1/2',
-              '',
+              'flex-1 w-1/2',
               device.value
             )}
           >
